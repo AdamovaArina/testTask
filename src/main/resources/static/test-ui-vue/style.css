@@ -1,0 +1,113 @@
+.table{
+    margin: 20px;
+    min-height: 300px;
+    width: 50%;
+    border: black 2px solid;
+    background-color: blanchedalmond;
+    display: table;
+}
+
+.table-title{
+    display: table-row;
+    background-color: #c6b799;
+}
+
+.table-row{
+    display: table-row;
+}
+
+.table-row:nth-child(2n+1){
+    background: #e0d2b6;
+}
+
+.line{
+    display: table-cell;
+    padding: 10px;
+    border: black 1px solid;
+}
+
+.buttons-block{
+    margin: 20px;
+    width: 50%;
+    text-align-last: justify;
+}
+
+.update-buttons-block{
+    min-width: 55px;
+    text-align: center;
+}
+
+.button{
+    background-color: #e0d2b6;
+    border: black 1px solid;
+}
+
+.button:hover{
+    background-color: #c6b799;
+}
+
+.add-button{
+    margin-left: 20px;
+}
+
+.window{
+    position: absolute;
+    background-color: blanchedalmond;
+    padding: 10px;
+    display: none;
+}
+
+.window-title{
+    text-align: center;
+    margin-top: -10px;
+    margin-left: -10px;
+    width: calc(100% + 20px);
+    background-color: #c6b799;
+    border-bottom: black 2px solid;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.add-window{
+    margin-left: 800px;
+    border: black 2px solid;
+}
+
+.update-window{
+    margin-left: 800px;
+    margin-top: 280px;
+    border: black 2px solid;
+}
+
+.delete-window{
+    margin-left: 510px;
+    margin-top: 210px;
+    border: #000000 2px solid;
+    box-shadow: 0px 0px 0px 10px #c6b799;
+    width: 300px;
+    height: 100px;
+    text-align: center;
+}
+
+.family{
+    width: 150px;
+    display: inline-block;
+    text-align: left;
+}
+
+.window-buttons-block{
+    width: 100%;
+    text-align-last: justify;
+}
+
+.active{
+    display: block;
+}
+
+.warning{
+    display: block;
+}
+
+.update{
+    display: block;
+}
