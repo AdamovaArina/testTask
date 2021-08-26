@@ -1,4 +1,4 @@
-package test.ui.rest.responses;
+package responses;
 
 public class BaseResponse {
     private final String message;

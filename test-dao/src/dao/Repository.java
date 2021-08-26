@@ -1,8 +1,8 @@
-package test.dao;
+package dao;
 
+import beans.IRepository;
+import beans.Person;
 import org.apache.ibatis.session.SqlSession;
-import test.beans.IRepository;
-import test.beans.Person;
 
 import java.util.List;
 

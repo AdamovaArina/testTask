@@ -1,7 +1,7 @@
-package test.ui.rest.responses;
+package responses;
 
-import test.beans.Gender;
-import test.beans.Person;
+import beans.Gender;
+import beans.Person;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

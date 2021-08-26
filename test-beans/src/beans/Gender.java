@@ -1,4 +1,4 @@
-package test.beans;
+package beans;
 
 public enum Gender {
     MALE, FEMALE

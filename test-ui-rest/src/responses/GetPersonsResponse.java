@@ -1,6 +1,6 @@
-package test.ui.rest.responses;
+package responses;
 
-import test.beans.Person;
+import beans.Person;
 
 import java.util.ArrayList;
 import java.util.List;

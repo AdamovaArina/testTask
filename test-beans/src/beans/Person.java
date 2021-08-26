@@ -1,16 +1,23 @@
-package test.ui.rest.requests;
-
-import test.beans.Gender;
+package beans;
 
 import java.util.Date;
 
-public class UpdatePersonRequest {
+public class Person {
     private int id;
     private String lastName;
     private String firstName;
     private String patronymic;
     private Date dateOfBirth;
     private Gender personGender;
+
+    public Person(int id, String lastName, String firstName, String patronymic, Date dateOfBirth, Gender personGender){
+        this.id = id;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.patronymic = patronymic;
+        this.dateOfBirth = dateOfBirth;
+        this.personGender = personGender;
+    }
 
     public int getId() {
         return id;
@@ -59,4 +66,5 @@ public class UpdatePersonRequest {
     public void setPersonGender(Gender personGender) {
         this.personGender = personGender;
     }
+
 }

@@ -1,15 +1,20 @@
-package test.ui.rest.requests;
+package requests;
 
-import test.beans.Gender;
+import beans.Gender;
 
 import java.util.Date;
 
-public class AddPersonRequest {
+public class UpdatePersonRequest {
+    private int id;
     private String lastName;
     private String firstName;
     private String patronymic;
     private Date dateOfBirth;
     private Gender personGender;
+
+    public int getId() {
+        return id;
+    }
 
     public String getLastName() {
         return lastName;
@@ -29,6 +34,10 @@ public class AddPersonRequest {
 
     public Gender getPersonGender() {
         return personGender;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setLastName(String lastName) {

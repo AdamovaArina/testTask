@@ -1,12 +1,12 @@
-package test.ui.rest;
+package controllers;
 
+import beans.PersonSystem;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import test.beans.PersonSystem;
-import test.ui.rest.requests.AddPersonRequest;
-import test.ui.rest.requests.UpdatePersonRequest;
-import test.ui.rest.responses.BaseResponse;
-import test.ui.rest.responses.GetPersonsResponse;
+import requests.AddPersonRequest;
+import requests.UpdatePersonRequest;
+import responses.BaseResponse;
+import responses.GetPersonsResponse;
 
 @RestController
 @RequestMapping("/person")
