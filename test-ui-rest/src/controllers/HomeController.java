@@ -9,6 +9,6 @@ public class HomeController {
 
     @RequestMapping("/")
     public String index(){
-        return "test-ui-vue/index.html";
+        return "index.html";
     }
 }
