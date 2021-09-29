@@ -1,92 +1,57 @@
-.table{
-    margin: 20px;
-    min-height: 300px;
-    width: 50%;
-    border: black 2px solid;
-    background-color: blanchedalmond;
-    display: table;
+.box{
+    max-width: 800px;
+    border: #026da7 1px solid;
 }
 
-.table-title{
-    display: table-row;
-    background-color: #c6b799;
+.cell{
+    border: #026da7 1px solid !important;
 }
 
-.table-row{
-    display: table-row;
+.header{
+    background-color: skyblue !important;
+    border: #026da7 1px solid !important;
 }
 
-.table-row:nth-child(2n+1){
-    background: #e0d2b6;
+.add-dialog{
+    margin-top: 0px !important;
+    margin-left: 815px !important;
+    width: 500px;
+    height: 470px;
+    position: absolute;
 }
 
-.line{
-    display: table-cell;
-    padding: 10px;
-    border: black 1px solid;
+.update-dialog{
+    margin-top: 480px !important;
+    margin-left: 815px !important;
+    width: 500px;
+    height: 505px;
+    position: absolute;
+}
+
+.delete-dialog{
+    margin-left: 460px;
+    margin-top: 210px;
+    width: 400px;
+    height: 100px;
+    position: absolute;
+}
+
+.add-calendar{
+    position: absolute;
 }
 
 .buttons-block{
     margin: 20px;
-    width: 50%;
-    text-align-last: justify;
+    width: 100%;
+    text-align: justify;
 }
 
-.update-buttons-block{
-    min-width: 55px;
-    text-align: center;
-}
-
-.button{
-    background-color: #e0d2b6;
-    border: black 1px solid;
-}
-
-.button:hover{
-    background-color: #c6b799;
-}
-
-.add-button{
-    margin-left: 20px;
-}
-
-.window{
-    position: absolute;
-    background-color: blanchedalmond;
-    padding: 10px;
-    display: none;
-}
-
-.window-title{
-    text-align: center;
-    margin-top: -10px;
-    margin-left: -10px;
-    width: calc(100% + 20px);
-    background-color: #c6b799;
-    border-bottom: black 2px solid;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-.add-window{
-    margin-left: 800px;
-    border: black 2px solid;
-}
-
-.update-window{
-    margin-left: 800px;
-    margin-top: 280px;
-    border: black 2px solid;
-}
-
-.delete-window{
-    margin-left: 510px;
-    margin-top: 210px;
-    border: #000000 2px solid;
-    box-shadow: 0px 0px 0px 10px #c6b799;
+.button-manage{
     width: 300px;
-    height: 100px;
-    text-align: center;
+    margin-bottom: 15px;
+    display: block;
+    text-align-last: center !important;
+    text-align: center !important;
 }
 
 .family{
@@ -95,19 +60,5 @@
     text-align: left;
 }
 
-.window-buttons-block{
-    width: 100%;
-    text-align-last: justify;
-}
 
-.active{
-    display: block;
-}
 
-.warning{
-    display: block;
-}
-
-.update{
-    display: block;
-}

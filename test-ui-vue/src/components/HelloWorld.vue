@@ -1,83 +1,105 @@
 <template>
   <div>
-    <div class="window add-window" v-if="isActive" v-bind:class="{active: isActive}">
-      <div class="window-title">Добавить человека</div>
-      <p><div class="family">Фамилия: </div><input type="text" v-model="addLastName">
-      <p><div class="family">Имя: </div><input type="text" v-model="addFirstName">
-      <p><div class="family">Отчество: </div><input type="text" v-model="addPatronymic">
-      <p><div class="family">Дата рождения: </div><input type="date" v-model="addDateOfBirth">
-      <p><div class="family">Пол: </div><input type="radio" value="MALE" v-model="addPersonGender">
-      <label>муж</label>
-      <input type="radio" value="FEMALE" v-model="addPersonGender">
-      <label>жен</label>
-      <div class="window-buttons-block">
-        <button class="button"  v-on:click="cancelAddPerson()">Отмена</button>
-        <button class="button"  v-on:click="addPerson">Добавить</button>
-      </div>
-    </div>
-
-    <div class="window delete-window" v-if="isWarning" v-bind:class="{active: isWarning}">
-      <p>Удалить человека {{persons[currentIndex].lastName}} {{persons[currentIndex].firstName}}
-        {{persons[currentIndex].patronymic}}?</p>
-      <div class="window-buttons-block">
-        <button class="button"  v-on:click="isWarning=false">Отмена</button>
-        <button class="button"  v-on:click="deletePerson()">Ок</button>
-      </div>
-    </div>
-
-    <div class="window update-window" v-if="isUpdate" v-bind:class="{active: isUpdate}">
-      <div class="window-title">Изменить человека</div>
-      <p><div class="family">id: {{persons[currentIndex].id}}</div>
-      <p><div class="family">Фамилия: </div><input type="text" v-model="updateLastName">
-      <p><div class="family">Имя: </div><input type="text" v-model="updateFirstName">
-      <p><div class="family">Отчество: </div><input type="text" v-model="updatePatronymic">
-      <p><div class="family">Дата рождения: </div><input type="date" v-model="updateDateOfBirth">
-      <p><div class="family">Пол: </div><input type="radio" value="MALE" v-model="updatePersonGender">
-      <label>муж</label>
-      <input type="radio" value="FEMALE" v-model="updatePersonGender">
-      <label>жен</label>
-      <div class="window-buttons-block">
-        <button class="button"  v-on:click="cancelUpdatePerson()">Отмена</button>
-        <button class="button"  v-on:click="updatePerson()">Изменить</button>
-      </div>
-    </div>
-
-    <div class="table">
-      <div class="table-title">
-        <div class="line">id</div>
-        <div class="line">Фамилия</div>
-        <div class="line">Имя</div>
-        <div class="line">Отчество</div>
-        <div class="line">Дата рождения</div>
-        <div class="line">Пол</div>
-        <div class="line"> </div>
-      </div>
-      <div v-for="(person, index) in persons" class="table-row" :key="person.id">
-        <div class="line">{{person.id}}</div>
-        <div class="line">{{person.lastName}}</div>
-        <div class="line">{{person.firstName}}</div>
-        <div class="line">{{person.patronymic}}</div>
-        <div class="line">{{person.dateOfBirth}}</div>
-        <div class="line">{{person.personGender}}</div>
-        <div class="line">
-          <div class="update-buttons-block">
-            <button v-on:click="showDeletePerson(index)" title="удалить" class="button">×</button>
-            <button v-on:click="showUpdatePerson(index)" title="изменить" class="button">✎</button>
-          </div>
+    <Dialog :visible.sync="isActive" class="add-dialog">
+      <template #header>
+        <h3>Добавить человека</h3>
+      </template>
+        <p><div class="family">Фамилия: </div><InputText type="text" v-model="addLastName" />
+        <p><div class="family">Имя: </div><InputText type="text" v-model="addFirstName" />
+        <p><div class="family">Отчество: </div><InputText type="text" v-model="addPatronymic" />
+        <p><div class="family">Дата рождения: </div>
+          <Calendar id="navigators" v-model="addDateOfBirth" :monthNavigator="true" :yearNavigator="true"
+                    yearRange="1800:2030" dateFormat="yy-mm-dd" class="add-calendar"/>
+        <br>&nbsp;
+        <p><div class="family">Пол: </div><div class="p-field-radiobutton" style="display: inline-block">
+          <RadioButton id="g1" name="addPersonGender" value="MALE" v-model="addPersonGender" />
+          <label for="g1">&nbsp; муж &nbsp;</label>
         </div>
+        <div class="p-field-radiobutton" style="display: inline-block">
+          <RadioButton id="g2" name="addPersonGender" value="FEMALE" v-model="addPersonGender" />
+          <label for="g2">&nbsp; жен</label>
+        </div>
+      <template #footer class="buttons-block">
+        <Button v-on:click="cancelAddPerson()" label="Отмена" icon="pi pi-times" class="p-button-text"/>
+        <Button v-on:click="addPerson" label="Добавить" icon="pi pi-check" autofocus/>
+      </template>
+    </Dialog>
+
+    <Dialog :visible.sync="isWarning" class="delete-dialog">
+      <template #header>
+        <h3>Удалить человека {{persons[currentIndex].lastName}} {{persons[currentIndex].firstName}}
+          {{persons[currentIndex].patronymic}}?</h3>
+      </template>
+      <div></div>
+      <template #footer class="buttons-block">
+        <Button v-on:click="cancelDeletePerson()" label="Отмена" icon="pi pi-times" class="p-button-text"/>
+        <Button v-on:click="deletePerson()" label="Удалить" icon="pi pi-check" autofocus/>
+      </template>
+    </Dialog>
+
+    <Dialog :visible.sync="isUpdate" class="update-dialog">
+      <template #header>
+        <h3>Изменить данные о человеке</h3>
+      </template>
+      <p><div class="family">id: {{persons[currentIndex].id}}</div>
+      <p><div class="family">Фамилия: </div><InputText type="text" v-model="updateLastName" />
+      <p><div class="family">Имя: </div><InputText type="text" v-model="updateFirstName" />
+      <p><div class="family">Отчество: </div><InputText type="text" v-model="updatePatronymic" />
+      <p><div class="family">Дата рождения: </div>
+      <Calendar id="navigate" v-model="updateDateOfBirth" :monthNavigator="true" :yearNavigator="true"
+                yearRange="1800:2030" dateFormat="yy-mm-dd" class="add-calendar"/>
+      <br>&nbsp;
+      <p><div class="family">Пол: </div><div class="p-field-radiobutton" style="display: inline-block">
+      <RadioButton id="g3" name="addPersonGender" value="MALE" v-model="updatePersonGender" />
+      <label for="g3">&nbsp; муж &nbsp;</label>
+    </div>
+      <div class="p-field-radiobutton" style="display: inline-block">
+        <RadioButton id="g4" name="addPersonGender" value="FEMALE" v-model="updatePersonGender" />
+        <label for="g4">&nbsp; жен</label>
       </div>
-    </div>
-    <div class="buttons-block">
-      <button v-on:click="getPersons" class="button">Показать в произвольном порядке</button>
-      <button v-on:click="getPersonsSort" class="button">Отсортировать по дате рождения</button>
-      <button v-on:click="showAddPerson()" class="button add-button">Добавить человека</button>
-    </div>
+      <template #footer class="buttons-block">
+        <Button v-on:click="cancelUpdatePerson()" label="Отмена" icon="pi pi-times" class="p-button-text"/>
+        <Button v-on:click="updatePerson()" label="Изменить" icon="pi pi-check" autofocus/>
+      </template>
+    </Dialog>
+
+    <DataTable :value = "persons" class="box" autoLayout="true">
+      <Column field="id" header="id" bodyClass="cell" headerClass="header"></Column>
+      <Column field="lastName" header="Фамилия" bodyClass="cell" headerClass="header"></Column>
+      <Column field="firstName" header="Имя" bodyClass="cell" headerClass="header"></Column>
+      <Column field="patronymic" header="Отчество" bodyClass="cell" headerClass="header"></Column>
+      <Column field="dateOfBirth" header="Дата рождения" bodyClass="cell" headerClass="header"></Column>
+      <Column field="personGender" header="Пол" bodyClass="cell" headerClass="header"></Column>
+      <Column header="" bodyClass="cell" headerClass="header">
+        <template #body="slotProps">
+          <Button type="button" icon="pi pi-trash" v-on:click="showDeletePerson(slotProps.index)" title="изменить" style="margin-right: .5em"></Button>
+          <Button type="button" icon="pi pi-pencil" v-on:click="showUpdatePerson(slotProps.index)" title="удалить" ></Button>
+        </template>
+      </Column>
+    </DataTable>
+
+    <br/><Button type="button" v-on:click="getPersons" class="button-manage">Показать в произвольном порядке</Button>
+    <br/><Button type="button" v-on:click="getPersonsSort" class="button-manage">Отсортировать по дате рождения</Button>
+    <br/><Button type="button" v-on:click="showAddPerson()" class="button-manage">Добавить человека</Button>
+
   </div>
 </template>
 
 <style src="./../style.css"></style>
 
 <script>
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Button from 'primevue/button';
+import Dialog from 'primevue/dialog';
+import InputText from 'primevue/inputtext';
+import Calendar from 'primevue/calendar';
+import RadioButton from 'primevue/radiobutton';
+
+import "primevue/resources/themes/saga-blue/theme.css"
+import "primevue/resources/primevue.min.css"
+import "primeicons/primeicons.css"
+
 export default {
   name: 'HelloWorld',
   data: function(){
@@ -101,6 +123,8 @@ export default {
       updatePersonGender: null
     }
   },
+  config: {},
+  components: {DataTable, Column, Button, Dialog, InputText, Calendar, RadioButton},
 
   created() {
     this.getPersons();
@@ -138,10 +162,11 @@ export default {
     },
 
     showDeletePerson: function(index){
+      this.currentIndex = index
       this.isWarning = true
       this.isUpdate = false
       this.cancelAddPerson()
-      this.currentIndex = index
+      console.log(index)
     },
 
     deletePerson: function(){
@@ -149,6 +174,10 @@ export default {
       this.currentIndex = 0
       this.sendAjaxRequest("/person/deletePerson", "DELETE", JSON.stringify(this.persons[index].id),
           function (){this.sendAjaxRequest("/person/getPersons", "GET", null, this.successGetPersons)}.bind(this))
+      this.isWarning = false
+    },
+
+    cancelDeletePerson: function(){
       this.isWarning = false
     },
 
@@ -210,5 +239,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+/deep/ .p-dialog-footer {
+  text-align: justify !important;
+  text-align-last: justify !important;
+}
+
+</style>
 
 
