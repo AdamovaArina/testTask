@@ -4,19 +4,19 @@
       <template #header>
         <h3>Добавить человека</h3>
       </template>
-        <p><div class="family">Фамилия: </div><InputText type="text" v-model="addLastName" />
-        <p><div class="family">Имя: </div><InputText type="text" v-model="addFirstName" />
-        <p><div class="family">Отчество: </div><InputText type="text" v-model="addPatronymic" />
+        <p><div class="family">Фамилия: </div><InputText type="text" v-model="add.lastName" />
+        <p><div class="family">Имя: </div><InputText type="text" v-model="add.firstName" />
+        <p><div class="family">Отчество: </div><InputText type="text" v-model="add.patronymic" />
         <p><div class="family">Дата рождения: </div>
-          <Calendar id="navigators" v-model="addDateOfBirth" :monthNavigator="true" :yearNavigator="true"
+          <Calendar id="navigators" v-model="add.dateOfBirth" :monthNavigator="true" :yearNavigator="true"
                     yearRange="1800:2030" dateFormat="yy-mm-dd" class="add-calendar"/>
         <br>&nbsp;
         <p><div class="family">Пол: </div><div class="p-field-radiobutton" style="display: inline-block">
-          <RadioButton id="g1" name="addPersonGender" value="MALE" v-model="addPersonGender" />
+          <RadioButton id="g1" name="addPersonGender" value="MALE" v-model="add.personGender" />
           <label for="g1">&nbsp; муж &nbsp;</label>
         </div>
         <div class="p-field-radiobutton" style="display: inline-block">
-          <RadioButton id="g2" name="addPersonGender" value="FEMALE" v-model="addPersonGender" />
+          <RadioButton id="g2" name="addPersonGender" value="FEMALE" v-model="add.personGender" />
           <label for="g2">&nbsp; жен</label>
         </div>
       <template #footer class="buttons-block">
@@ -42,19 +42,19 @@
         <h3>Изменить данные о человеке</h3>
       </template>
       <p><div class="family">id: {{persons[currentIndex].id}}</div>
-      <p><div class="family">Фамилия: </div><InputText type="text" v-model="updateLastName" />
-      <p><div class="family">Имя: </div><InputText type="text" v-model="updateFirstName" />
-      <p><div class="family">Отчество: </div><InputText type="text" v-model="updatePatronymic" />
+      <p><div class="family">Фамилия: </div><InputText type="text" v-model="update.lastName" />
+      <p><div class="family">Имя: </div><InputText type="text" v-model="update.firstName" />
+      <p><div class="family">Отчество: </div><InputText type="text" v-model="update.patronymic" />
       <p><div class="family">Дата рождения: </div>
-      <Calendar id="navigate" v-model="updateDateOfBirth" :monthNavigator="true" :yearNavigator="true"
+      <Calendar id="navigate" v-model="update.dateOfBirth" :monthNavigator="true" :yearNavigator="true"
                 yearRange="1800:2030" dateFormat="yy-mm-dd" class="add-calendar"/>
       <br>&nbsp;
       <p><div class="family">Пол: </div><div class="p-field-radiobutton" style="display: inline-block">
-      <RadioButton id="g3" name="addPersonGender" value="MALE" v-model="updatePersonGender" />
+      <RadioButton id="g3" name="addPersonGender" value="MALE" v-model="update.personGender" />
       <label for="g3">&nbsp; муж &nbsp;</label>
     </div>
       <div class="p-field-radiobutton" style="display: inline-block">
-        <RadioButton id="g4" name="addPersonGender" value="FEMALE" v-model="updatePersonGender" />
+        <RadioButton id="g4" name="addPersonGender" value="FEMALE" v-model="update.personGender" />
         <label for="g4">&nbsp; жен</label>
       </div>
       <template #footer class="buttons-block">
@@ -100,6 +100,16 @@ import "primevue/resources/themes/saga-blue/theme.css"
 import "primevue/resources/primevue.min.css"
 import "primeicons/primeicons.css"
 
+class ChangePerson{
+  constructor(lastName, firstName, patronymic, dateOfBirth, personGender){
+    this.lastName = lastName;
+    this.firstName = firstName;
+    this.patronymic = patronymic;
+    this.dateOfBirth = dateOfBirth;
+    this.personGender = personGender;
+  }
+}
+
 export default {
   name: 'HelloWorld',
   data: function(){
@@ -110,20 +120,11 @@ export default {
       isUpdate: false,
       currentIndex: 0,
 
-      addLastName: "",
-      addFirstName: "",
-      addPatronymic: "",
-      addDateOfBirth: null,
-      addPersonGender: null,
-
-      updateLastName: "",
-      updateFirstName: "",
-      updatePatronymic: "",
-      updateDateOfBirth: null,
-      updatePersonGender: null
+      add: new ChangePerson(),
+      update: new ChangePerson()
     }
   },
-  config: {},
+  //config: {},
   components: {DataTable, Column, Button, Dialog, InputText, Calendar, RadioButton},
 
   created() {
@@ -146,19 +147,19 @@ export default {
 
     addPerson: function (){
       this.sendAjaxRequest("/person/addPerson", "POST",
-          JSON.stringify({lastName: this.addLastName, firstName: this.addFirstName, patronymic: this.addPatronymic,
-            dateOfBirth: this.addDateOfBirth, personGender: this.addPersonGender}),
+          JSON.stringify({lastName: this.add.lastName, firstName: this.add.firstName, patronymic: this.add.patronymic,
+            dateOfBirth: this.add.dateOfBirth, personGender: this.add.personGender}),
           function (){this.sendAjaxRequest("/person/getPersons", "GET", null, this.successGetPersons)}.bind(this))
       this.cancelAddPerson()
     },
 
     cancelAddPerson: function(){
-      this.addLastName = ""
-      this.addFirstName = ""
-      this.addPatronymic = ""
-      this.addDateOfBirth = null
-      this.addPersonGender = null
       this.isActive = false
+      this.add.lastName = ""
+      this.add.firstName = ""
+      this.add.patronymic = ""
+      this.add.dateOfBirth = null
+      this.add.personGender = null
     },
 
     showDeletePerson: function(index){
@@ -185,34 +186,34 @@ export default {
       this.isWarning = false
       this.isUpdate = true
       this.currentIndex = index
-      this.updateLastName =  this.persons[index].lastName
-      this.updateFirstName =  this.persons[index].firstName
-      this.updatePatronymic =  this.persons[index].patronymic
+      this.update.lastName =  this.persons[index].lastName
+      this.update.firstName =  this.persons[index].firstName
+      this.update.patronymic =  this.persons[index].patronymic
       var parts = this.persons[index].dateOfBirth.split('-')
-      this.updateDateOfBirth = parts[2] + "-" + parts[1] + "-" + parts[0]
+      this.update.dateOfBirth = parts[2] + "-" + parts[1] + "-" + parts[0]
       if (this.persons[index].personGender == "м"){
-        this.updatePersonGender = "MALE"
+        this.update.personGender = "MALE"
       } else {
-        this.updatePersonGender = "FEMALE"
+        this.update.personGender = "FEMALE"
       }
     },
 
     updatePerson: function(){
       this.sendAjaxRequest("/person/updatePerson", "PUT",
-          JSON.stringify({id: this.persons[this.currentIndex].id, lastName: this.updateLastName,
-            firstName: this.updateFirstName, patronymic: this.updatePatronymic,
-            dateOfBirth: this.updateDateOfBirth, personGender: this.updatePersonGender}),
+          JSON.stringify({id: this.persons[this.currentIndex].id, lastName: this.update.lastName,
+            firstName: this.update.firstName, patronymic: this.update.patronymic,
+            dateOfBirth: this.update.dateOfBirth, personGender: this.update.personGender}),
           function (){this.sendAjaxRequest("/person/getPersons", "GET", null, this.successGetPersons)}.bind(this))
       this.cancelUpdatePerson()
     },
 
     cancelUpdatePerson: function(){
-      this.updateLastName = ""
-      this.updateFirstName = ""
-      this.updatePatronymic = ""
-      this.updateDateOfBirth = null
-      this.updatePersonGender = null
       this.isUpdate = false
+      this.update.lastName = ""
+      this.update.firstName = ""
+      this.update.patronymic = ""
+      this.update.dateOfBirth = null
+      this.update.personGender = null
     },
 
     successGetPersons: function(response) {
