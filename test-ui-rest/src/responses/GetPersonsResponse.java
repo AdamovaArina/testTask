@@ -6,21 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GetPersonsResponse extends BaseResponse {
-    private List<PersonResponse> data;
+    private List<Person> data;
 
     public GetPersonsResponse(String message, boolean status, List<Person> data) {
         super(message, status);
-        this.data = new ArrayList<PersonResponse>();
-        for (int i = 0; i < data.size(); i++){
-            this.data.add(new PersonResponse(data.get(i)));
-        }
+        this.data = data;
     }
 
-    public List<PersonResponse> getData() {
+    public List<Person> getData() {
         return data;
     }
 
-    public void setData(List<PersonResponse> data) {
+    public void setData(List<Person> data) {
         this.data = data;
     }
 }

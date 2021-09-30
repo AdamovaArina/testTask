@@ -216,7 +216,37 @@ export default {
     },
 
     successGetPersons: function(response) {
-      this.persons = response.data
+      this.persons = [];
+      for (var i = 0; i < response.data.length; i++){
+        var pers = {};
+        pers.id = response.data[i].id;
+        pers.lastName = response.data[i].lastName;
+        pers.firstName = response.data[i].firstName;
+        pers.patronymic = response.data[i].patronymic;
+        var date = new Date(response.data[i].dateOfBirth);
+        var y = date.getFullYear();
+        var m1 = date.getMonth() + 1;
+        var m = {};
+        if (m1 < 10){
+          m = '0' + m1;
+        } else {
+          m = m1;
+        }
+        var d1 = date.getDate();
+        var d = {};
+        if (d1 < 10){
+          d = '0' + d1;
+        } else {
+          d = d1;
+        }
+        pers.dateOfBirth = d + '-' + m + '-' + y;
+        if (response.data[i].personGender == 'MALE'){
+          pers.personGender = 'м'
+        } else {
+          pers.personGender = 'ж'
+        }
+        this.persons.push(pers);
+      }
       console.log(response)
     },
 
