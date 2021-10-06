@@ -1,5 +1,6 @@
 package controllers;
 
+import beans.Person;
 import beans.PersonSystem;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +48,14 @@ public class PersonController {
     @ResponseBody
     public BaseResponse addPerson(@RequestBody AddPersonRequest person) {
         try{
-            this.personSystem.addPerson(person.getLastName(), person.getFirstName(), person.getPatronymic(), person.getDateOfBirth(), person.getPersonGender());
+            Person myPerson = Person.builder()
+                    .lastName(person.getLastName())
+                    .firstName(person.getFirstName())
+                    .patronymic(person.getPatronymic())
+                    .dateOfBirth(person.getDateOfBirth())
+                    .personGender(person.getPersonGender())
+                    .build();
+            this.personSystem.addPerson(myPerson);
             return new BaseResponse("The person was added", true);
         } catch (Exception e){
             return new BaseResponse(e.getMessage(), false);
@@ -73,7 +81,15 @@ public class PersonController {
     @ResponseBody
     public BaseResponse updatePerson(@RequestBody UpdatePersonRequest person) {
         try{
-            this.personSystem.updatePerson(person.getId(), person.getLastName(), person.getFirstName(), person.getPatronymic(), person.getDateOfBirth(), person.getPersonGender());
+            Person myPerson = Person.builder()
+                    .id(person.getId())
+                    .lastName(person.getLastName())
+                    .firstName(person.getFirstName())
+                    .patronymic(person.getPatronymic())
+                    .dateOfBirth(person.getDateOfBirth())
+                    .personGender(person.getPersonGender())
+                    .build();
+            this.personSystem.updatePerson(myPerson);
             return new BaseResponse("The person was updated", true);
         } catch (Exception e){
             return new BaseResponse(e.getMessage(), false);

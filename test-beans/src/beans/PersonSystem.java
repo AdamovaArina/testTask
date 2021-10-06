@@ -18,11 +18,7 @@ public class PersonSystem {
         return this.repository.getPersonsSort();
     }
 
-    public void addPerson(String lastName, String firstName, String patronymic, Date dateOfBirth, Gender personGender) throws Exception {
-        if (lastName == null || firstName == null || patronymic == null || dateOfBirth == null){
-            throw new Exception("Incorrect arguments");
-        }
-        Person myPerson = new Person(0, lastName, firstName, patronymic, dateOfBirth, personGender);
+    public void addPerson(Person myPerson) throws Exception {
         this.repository.addPerson(myPerson);
     }
 
@@ -34,20 +30,10 @@ public class PersonSystem {
         this.repository.deletePerson(id);
     }
 
-    public void updatePerson(int id, String lastName, String firstName, String patronymic, Date dateOfBirth, Gender personGender) throws Exception {
-        Person myPerson = this.repository.getPersonById(id);
-        if (myPerson == null){
+    public void updatePerson(Person myPerson) throws Exception {
+        if (this.repository.getPersonById(myPerson.getId()) == null){
             throw new Exception("beans.Person is not existed");
         }
-        if (lastName == null || firstName == null || patronymic == null || dateOfBirth == null){
-            throw new Exception("Incorrect arguments");
-        }
-        myPerson.setLastName(lastName);
-        myPerson.setFirstName(firstName);
-        myPerson.setPatronymic(patronymic);
-        myPerson.setDateOfBirth(dateOfBirth);
-        myPerson.setPersonGender(personGender);
-
         this.repository.updatePerson(myPerson);
     }
 }

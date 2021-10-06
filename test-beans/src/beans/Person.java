@@ -1,7 +1,14 @@
 package beans;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
+@Builder
+@Getter
+@Setter
 public class Person {
     private int id;
     private String lastName;

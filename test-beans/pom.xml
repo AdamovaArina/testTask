@@ -17,5 +17,13 @@
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 	</build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+        </dependency>
+    </dependencies>
     
 </project>
