@@ -13,6 +13,7 @@
         <module>test-beans</module>
         <module>test-dao</module>
         <module>test-ui-rest</module>
+        <module>test-ui-vue</module>
     </modules>
 
     <properties>
