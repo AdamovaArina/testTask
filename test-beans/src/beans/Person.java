@@ -2,8 +2,6 @@ package beans;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 
@@ -16,5 +14,4 @@ public class Person {
     private String patronymic;
     private Date dateOfBirth;
     private Gender personGender;
-
 }
