@@ -28,17 +28,26 @@ public class Repository implements IRepository {
     }
 
     public void addPerson(Person myPerson) {
-        this.myMapper.addPerson(myPerson);
-        this.mySession.commit();
+        try{
+            this.myMapper.addPerson(myPerson);
+        } finally{
+            this.mySession.commit();
+        }
     }
 
     public void deletePerson(int id) {
-        this.myMapper.deletePerson(id);
-        this.mySession.commit();
+        try{
+            this.myMapper.deletePerson(id);
+        } finally {
+            this.mySession.commit();
+        }
     }
 
     public void updatePerson(Person myPerson) {
-        this.myMapper.updatePerson(myPerson);
-        this.mySession.commit();
+        try{
+            this.myMapper.updatePerson(myPerson);
+        } finally{
+            this.mySession.commit();
+        }
     }
 }
