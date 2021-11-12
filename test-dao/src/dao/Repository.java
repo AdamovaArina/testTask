@@ -7,47 +7,47 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.List;
 
 public class Repository implements IRepository {
-    final private MyMapper myMapper;
+    final private PersonMapper personMapper;
     final private SqlSession mySession;
 
-    public Repository(MyMapper myMapper, SqlSession mySession) {
-        this.myMapper = myMapper;
+    public Repository(PersonMapper personMapper, SqlSession mySession) {
+        this.personMapper = personMapper;
         this.mySession = mySession;
     }
 
     public Person getPersonById(int id) {
-        return this.myMapper.getPersonById(id);
+        return personMapper.getPersonById(id);
     }
 
     public List<Person> getPersons() {
-        return this.myMapper.getPersons();
+        return personMapper.getPersons();
     }
 
     public List<Person> getPersonsSort() {
-        return this.myMapper.getPersonsSort();
+        return personMapper.getPersonsSort();
     }
 
     public void addPerson(Person myPerson) {
         try{
-            this.myMapper.addPerson(myPerson);
+            personMapper.addPerson(myPerson);
         } finally{
-            this.mySession.commit();
+            mySession.commit();
         }
     }
 
     public void deletePerson(int id) {
         try{
-            this.myMapper.deletePerson(id);
+            personMapper.deletePerson(id);
         } finally {
-            this.mySession.commit();
+            mySession.commit();
         }
     }
 
     public void updatePerson(Person myPerson) {
         try{
-            this.myMapper.updatePerson(myPerson);
+            personMapper.updatePerson(myPerson);
         } finally{
-            this.mySession.commit();
+            mySession.commit();
         }
     }
 }

@@ -1,7 +1,7 @@
 package controllers;
 
 import beans.Person;
-import beans.PersonSystem;
+import beans.PersonService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import requests.AddPersonRequest;
@@ -12,21 +12,22 @@ import responses.GetPersonsResponse;
 @RestController
 @RequestMapping("/person")
 public class PersonController {
-    private final PersonSystem personSystem;
+    private final PersonService personService;
 
-    public PersonController(PersonSystem personSystem) {
-        this.personSystem = personSystem;
+    public PersonController(PersonService personService) {
+        this.personService = personService;
     }
 
     @RequestMapping(value = "/getPersons",
             method = RequestMethod.GET,
             produces = { MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public BaseResponse getPersons() {
+    public GetPersonsResponse getPersons() {
         try{
-            return new GetPersonsResponse("The list was formed", true, this.personSystem.getPersons());
+            return new GetPersonsResponse("The list was formed", true, personService.getPersons());
         } catch (Exception e){
-            return new BaseResponse(e.getMessage(), false);
+            e.printStackTrace();
+            return new GetPersonsResponse(e.getMessage(), false, null);
         }
     }
 
@@ -34,11 +35,12 @@ public class PersonController {
             method = RequestMethod.GET,
             produces = { MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public BaseResponse getPersonsSort() {
+    public GetPersonsResponse getPersonsSort() {
         try{
-            return new GetPersonsResponse("The list was formed", true, this.personSystem.getPersonsSort());
+            return new GetPersonsResponse("The list was formed", true, personService.getPersonsSort());
         } catch (Exception e){
-            return new BaseResponse(e.getMessage(), false);
+            e.printStackTrace();
+            return new GetPersonsResponse(e.getMessage(), false, null);
         }
     }
 
@@ -55,9 +57,10 @@ public class PersonController {
                     .dateOfBirth(person.getDateOfBirth())
                     .personGender(person.getPersonGender())
                     .build();
-            this.personSystem.addPerson(myPerson);
+            personService.addPerson(myPerson);
             return new BaseResponse("The person was added", true);
         } catch (Exception e){
+            e.printStackTrace();
             return new BaseResponse(e.getMessage(), false);
         }
     }
@@ -68,9 +71,10 @@ public class PersonController {
     @ResponseBody
     public BaseResponse deletePerson(@RequestBody int id) {
         try{
-            this.personSystem.deletePerson(id);
+            personService.deletePerson(id);
             return new BaseResponse("The person was deleted", true);
         } catch (Exception e){
+            e.printStackTrace();
             return new BaseResponse(e.getMessage(), false);
         }
     }
@@ -89,9 +93,10 @@ public class PersonController {
                     .dateOfBirth(person.getDateOfBirth())
                     .personGender(person.getPersonGender())
                     .build();
-            this.personSystem.updatePerson(myPerson);
+            personService.updatePerson(myPerson);
             return new BaseResponse("The person was updated", true);
         } catch (Exception e){
+            e.printStackTrace();
             return new BaseResponse(e.getMessage(), false);
         }
     }

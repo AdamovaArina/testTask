@@ -2,37 +2,37 @@ package beans;
 
 import java.util.List;
 
-public class PersonSystem {
+public class PersonService {
     final private IRepository repository;
 
-    public PersonSystem(IRepository repository) {
+    public PersonService(IRepository repository) {
         this.repository = repository;
     }
 
     public List<Person> getPersons(){
-        return this.repository.getPersons();
+        return repository.getPersons();
     }
 
     public List<Person> getPersonsSort(){
-        return this.repository.getPersonsSort();
+        return repository.getPersonsSort();
     }
 
     public void addPerson(Person myPerson) throws Exception {
-        this.repository.addPerson(myPerson);
+        repository.addPerson(myPerson);
     }
 
     public void deletePerson(int id) throws Exception {
-        Person myPerson = this.repository.getPersonById(id);
+        Person myPerson = repository.getPersonById(id);
         if (myPerson == null){
             throw new Exception("beans.Person is not existed");
         }
-        this.repository.deletePerson(id);
+        repository.deletePerson(id);
     }
 
     public void updatePerson(Person myPerson) throws Exception {
-        if (this.repository.getPersonById(myPerson.getId()) == null){
+        if (repository.getPersonById(myPerson.getId()) == null){
             throw new Exception("beans.Person is not existed");
         }
-        this.repository.updatePerson(myPerson);
+        repository.updatePerson(myPerson);
     }
 }

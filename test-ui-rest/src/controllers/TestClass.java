@@ -1,7 +1,7 @@
 package controllers;
 
-import beans.PersonSystem;
-import dao.MyMapper;
+import beans.PersonService;
+import dao.PersonMapper;
 import dao.Repository;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -27,16 +27,16 @@ public class TestClass {
     }
 
     @Bean
-    public PersonSystem personSystem() throws IOException {
+    public PersonService personSystem() throws IOException {
         SqlSessionFactory sqlSessionFactory;
-        MyMapper newMapper;
+        PersonMapper newMapper;
         Reader reader;
         reader = Resources
                 .getResourceAsReader("mybatis-config.xml");
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         SqlSession s = sqlSessionFactory.openSession();
-        newMapper = s.getMapper(MyMapper.class);
+        newMapper = s.getMapper(PersonMapper.class);
         Repository r = new Repository(newMapper, s);
-        return new PersonSystem(r);
+        return new PersonService(r);
     }
 }

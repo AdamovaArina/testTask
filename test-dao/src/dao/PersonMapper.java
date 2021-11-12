@@ -4,7 +4,7 @@ import beans.Person;
 
 import java.util.List;
 
-public interface MyMapper {
+public interface PersonMapper {
     Person getPersonById(int id);
     List<Person> getPersons();
     List<Person> getPersonsSort();
