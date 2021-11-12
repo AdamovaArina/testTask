@@ -2,4 +2,9 @@ target/
 .idea/
 test-ui-vue/build/
 test-ui-vue/node_modules/
-test-ui-vue\package-lock.json
+test-ui-vue/package-lock.json
+test-beans/test-beans.iml
+test-dao/test-dao.iml
+test-ui-rest/test-ui-rest.iml
+test-ui-vue/test-ui-vue.iml
+databaseProject.iml
