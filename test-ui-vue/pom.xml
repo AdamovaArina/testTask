@@ -7,6 +7,14 @@
     <groupId>org.example</groupId>
     <artifactId>test-ui-vue</artifactId>
     <version>2.1.1.RELEASE</version>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>org.example</groupId>
+        <artifactId>databaseProject</artifactId>
+        <version>2.1.1.RELEASE</version>
+    </parent>
+
     <build>
         <sourceDirectory>src</sourceDirectory>
     </build>
