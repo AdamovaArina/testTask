@@ -34,6 +34,7 @@ import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import Calendar from 'primevue/calendar';
 import RadioButton from 'primevue/radiobutton';
+import Utils from './utils.js';
 
 export default {
   name: "Update",
@@ -44,7 +45,7 @@ export default {
   components: {Button, Dialog, InputText, Calendar, RadioButton},
   methods:{
     updatePerson: function(){
-      this.sendAjaxRequest("/person/updatePerson", "PUT",
+      Utils.sendAjaxRequest("/person/updatePerson", "PUT",
           JSON.stringify({id: this.update.id, lastName: this.update.lastName,
             firstName: this.update.firstName, patronymic: this.update.patronymic,
             dateOfBirth: this.update.dateOfBirth, personGender: this.update.personGender}),
@@ -59,25 +60,6 @@ export default {
       this.update.dateOfBirth = null
       this.update.personGender = null
       this.$emit('close-update')
-    },
-
-    sendAjaxRequest: function(url, httpMethod, data, successCallback) {
-      var request = new XMLHttpRequest();
-      request.open(httpMethod, url);
-      request.setRequestHeader('Content-Type', 'application/json');
-      request.addEventListener('readystatechange', () => {
-        if (request.readyState === 4 && request.status === 200) {
-          if (JSON.parse(request.responseText).status === true){
-            successCallback(JSON.parse(request.responseText));
-          }
-        }
-      });
-      if (data != null) {
-        request.send(data);
-      }
-      else {
-        request.send();
-      }
     },
   }
 }

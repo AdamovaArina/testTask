@@ -60,6 +60,8 @@ import "primevue/resources/themes/saga-blue/theme.css"
 import "primevue/resources/primevue.min.css"
 import "primeicons/primeicons.css"
 
+import Utils from './utils.js';
+
 class ChangePerson{
   constructor(id, lastName, firstName, patronymic, dateOfBirth, personGender){
     this.id = id;
@@ -93,11 +95,11 @@ export default {
 
   methods: {
     getPersons: function(){
-      this.sendAjaxRequest("/person/getPersons", "GET", null, this.successGetPersons)
+      Utils.sendAjaxRequest("/person/getPersons", "GET", null, this.successGetPersons)
     },
 
     getPersonsSort: function(){
-      this.sendAjaxRequest("/person/getPersonsSort", "GET", null, this.successGetPersons)
+      Utils.sendAjaxRequest("/person/getPersonsSort", "GET", null, this.successGetPersons)
     },
 
     showAddPerson: function(){
@@ -180,25 +182,6 @@ export default {
         this.persons.push(pers);
       }
       console.log(response)
-    },
-
-    sendAjaxRequest: function(url, httpMethod, data, successCallback) {
-      var request = new XMLHttpRequest();
-      request.open(httpMethod, url);
-      request.setRequestHeader('Content-Type', 'application/json');
-      request.addEventListener('readystatechange', () => {
-        if (request.readyState === 4 && request.status === 200) {
-          if (JSON.parse(request.responseText).status === true){
-            successCallback(JSON.parse(request.responseText));
-          }
-        }
-      });
-      if (data != null) {
-        request.send(data);
-      }
-      else {
-        request.send();
-      }
     },
   }
 }

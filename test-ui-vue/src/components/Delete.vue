@@ -17,6 +17,7 @@
 <script>
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
+import Utils from './utils.js';
 
 export default {
   name: "Delete",
@@ -27,32 +28,13 @@ export default {
   components: {Button, Dialog},
   methods:{
     deletePerson: function(){
-      this.sendAjaxRequest("/person/deletePerson", "DELETE", JSON.stringify(this.model.id),
+      Utils.sendAjaxRequest("/person/deletePerson", "DELETE", JSON.stringify(this.model.id),
           function(){this.$emit('get-persons')}.bind(this))
       this.$emit('close-delete')
     },
 
     cancelDeletePerson: function(){
       this.$emit('close-delete')
-    },
-
-    sendAjaxRequest: function(url, httpMethod, data, successCallback) {
-      var request = new XMLHttpRequest();
-      request.open(httpMethod, url);
-      request.setRequestHeader('Content-Type', 'application/json');
-      request.addEventListener('readystatechange', () => {
-        if (request.readyState === 4 && request.status === 200) {
-          if (JSON.parse(request.responseText).status === true){
-            successCallback(JSON.parse(request.responseText));
-          }
-        }
-      });
-      if (data != null) {
-        request.send(data);
-      }
-      else {
-        request.send();
-      }
     },
   }
 }

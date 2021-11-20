@@ -33,6 +33,7 @@ import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import Calendar from 'primevue/calendar';
 import RadioButton from 'primevue/radiobutton';
+import Utils from './utils.js';
 
 class ChangePerson{
   constructor(lastName, firstName, patronymic, dateOfBirth, personGender){
@@ -57,7 +58,7 @@ export default {
   components: {Button, Dialog, InputText, Calendar, RadioButton},
   methods:{
     addPerson: function (){
-      this.sendAjaxRequest("/person/addPerson", "POST",
+      Utils.sendAjaxRequest("/person/addPerson", "POST",
           JSON.stringify({lastName: this.add.lastName, firstName: this.add.firstName, patronymic: this.add.patronymic,
             dateOfBirth: this.add.dateOfBirth, personGender: this.add.personGender}),
           function(){this.$emit('get-persons')}.bind(this))
@@ -71,25 +72,6 @@ export default {
       this.add.dateOfBirth = null
       this.add.personGender = null
       this.$emit('close-add')
-    },
-
-    sendAjaxRequest: function(url, httpMethod, data, successCallback) {
-      var request = new XMLHttpRequest();
-      request.open(httpMethod, url);
-      request.setRequestHeader('Content-Type', 'application/json');
-      request.addEventListener('readystatechange', () => {
-        if (request.readyState === 4 && request.status === 200) {
-          if (JSON.parse(request.responseText).status === true){
-            successCallback(JSON.parse(request.responseText));
-          }
-        }
-      });
-      if (data != null) {
-        request.send(data);
-      }
-      else {
-        request.send();
-      }
     },
   }
 }
