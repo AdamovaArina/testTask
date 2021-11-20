@@ -38,12 +38,20 @@ import Utils from './utils.js';
 
 export default {
   name: "Update",
+  data: function(){
+    return {
+      isUpdate: false,
+    }
+  },
   props: {
-    isUpdate: Boolean,
     update: Object
   },
   components: {Button, Dialog, InputText, Calendar, RadioButton},
   methods:{
+    openUpdate: function (){
+      this.isUpdate = true
+    },
+
     updatePerson: function(){
       Utils.sendAjaxRequest("/person/updatePerson", "PUT",
           JSON.stringify({id: this.update.id, lastName: this.update.lastName,
@@ -59,7 +67,7 @@ export default {
       this.update.patronymic = ""
       this.update.dateOfBirth = null
       this.update.personGender = null
-      this.$emit('close-update')
+      this.isUpdate = false
     },
   }
 }

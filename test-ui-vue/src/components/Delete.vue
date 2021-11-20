@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Dialog :visible.sync="isWarning" v-on:hide="cancelDeletePerson()" class="delete-dialog">
+    <Dialog :visible.sync="isDelete" v-on:hide="cancelDeletePerson()" class="delete-dialog">
       <template #header>
         <h3>Удалить человека {{model.lastName}} {{model.firstName}}
           {{model.patronymic}}?</h3>
@@ -21,20 +21,28 @@ import Utils from './utils.js';
 
 export default {
   name: "Delete",
+  data: function(){
+    return {
+      isDelete: false,
+    }
+  },
   props: {
-    isWarning: Boolean,
     model: Object
   },
   components: {Button, Dialog},
   methods:{
+    openDelete: function (){
+      this.isDelete = true
+    },
+
     deletePerson: function(){
       Utils.sendAjaxRequest("/person/deletePerson", "DELETE", JSON.stringify(this.model.id),
           function(){this.$emit('get-persons')}.bind(this))
-      this.$emit('close-delete')
+      this.isDelete = false;
     },
 
     cancelDeletePerson: function(){
-      this.$emit('close-delete')
+      this.isDelete = false;
     },
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Dialog :visible.sync="isActive" v-on:hide="cancelAddPerson()" class="add-dialog">
+    <Dialog :visible.sync="isAdd" v-on:hide="cancelAddPerson()" class="add-dialog">
       <template #header>
         <h3>Добавить человека</h3>
       </template>
@@ -49,14 +49,17 @@ export default {
   name: "Add",
   data: function(){
     return {
+      isAdd: false,
       add: new ChangePerson()
     }
   },
-  props: {
-    isActive: Boolean
-  },
+
   components: {Button, Dialog, InputText, Calendar, RadioButton},
   methods:{
+    openAdd: function (){
+      this.isAdd = true
+    },
+
     addPerson: function (){
       Utils.sendAjaxRequest("/person/addPerson", "POST",
           JSON.stringify({lastName: this.add.lastName, firstName: this.add.firstName, patronymic: this.add.patronymic,
@@ -71,8 +74,8 @@ export default {
       this.add.patronymic = ""
       this.add.dateOfBirth = null
       this.add.personGender = null
-      this.$emit('close-add')
-    },
+      this.isAdd = false
+    }
   }
 }
 </script>

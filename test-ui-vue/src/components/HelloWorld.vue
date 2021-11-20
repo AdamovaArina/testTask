@@ -1,24 +1,18 @@
 <template>
   <div>
       <Add
-          v-bind:is-active="isActive"
-          v-on:close-add="closeAdd()"
           v-on:get-persons="getPersons()"
           ref="add"
       ></Add>
 
       <Update
-          v-bind:is-update="isUpdate"
           v-bind:update="update"
-          v-on:close-update="closeUpdate()"
           v-on:get-persons="getPersons()"
           ref="update"
       ></Update>
 
       <Delete
-        v-bind:is-warning="isWarning"
         v-bind:model="model"
-        v-on:close-delete="closeDelete()"
         v-on:get-persons="getPersons()"
         ref="delete"
       ></Delete>
@@ -78,9 +72,6 @@ export default {
   data: function(){
     return {
       persons: [],
-      isActive: false,
-      isWarning: false,
-      isUpdate: false,
       currentIndex: 0,
 
       update: new ChangePerson(),
@@ -103,25 +94,13 @@ export default {
     },
 
     showAddPerson: function(){
-      this.isActive = true
-      this.isWarning = false
-    },
-
-    closeAdd: function(){
-      this.isActive = false
-    },
-
-    closeUpdate: function(){
-      this.isUpdate = false
-    },
-
-    closeDelete: function(){
-      this.isWarning = false
+      this.$refs.add.openAdd();
+      this.$refs.delete.cancelDeletePerson()
     },
 
     showDeletePerson: function(index){
       this.currentIndex = index
-      this.isWarning = true
+      this.$refs.delete.openDelete();
       this.$refs.add.cancelAddPerson()
       this.$refs.update.cancelUpdatePerson()
       this.model.id =  this.persons[index].id
@@ -133,8 +112,8 @@ export default {
     },
 
     showUpdatePerson: function(index){
-      this.isWarning = false
-      this.isUpdate = true
+      this.$refs.delete.cancelDeletePerson()
+      this.$refs.update.openUpdate();
       this.currentIndex = index
       this.update.id =  this.persons[index].id
       this.update.lastName =  this.persons[index].lastName
