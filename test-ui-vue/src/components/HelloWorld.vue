@@ -1,15 +1,18 @@
 <template>
   <div>
-      <Add
-          v-on:get-persons="getPersons()"
-          ref="add"
-      ></Add>
+      <AddUpdate
+        v-bind:addUpdate="add"
+        v-bind:flagUpdate="false"
+        v-on:get-persons="getPersons()"
+        ref="add"
+      ></AddUpdate>
 
-      <Update
-          v-bind:update="update"
+      <AddUpdate
+          v-bind:addUpdate="update"
+          v-bind:flagUpdate="true"
           v-on:get-persons="getPersons()"
           ref="update"
-      ></Update>
+      ></AddUpdate>
 
       <Delete
         v-bind:model="model"
@@ -46,8 +49,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Button from 'primevue/button';
 
-import Add from './Add'
-import Update from './Update'
+import AddUpdate from './AddUpdate'
 import Delete from './Delete'
 
 import "primevue/resources/themes/saga-blue/theme.css"
@@ -74,11 +76,12 @@ export default {
       persons: [],
       currentIndex: 0,
 
+      add: new ChangePerson(),
       update: new ChangePerson(),
       model: new ChangePerson()
     }
   },
-  components: {DataTable, Column, Button, Add, Update, Delete},
+  components: {DataTable, Column, Button, AddUpdate, Delete},
 
   created() {
     this.getPersons();
@@ -94,15 +97,15 @@ export default {
     },
 
     showAddPerson: function(){
-      this.$refs.add.openAdd();
+      this.$refs.add.openAddUpdate();
       this.$refs.delete.cancelDeletePerson()
     },
 
     showDeletePerson: function(index){
       this.currentIndex = index
-      this.$refs.delete.openDelete();
-      this.$refs.add.cancelAddPerson()
-      this.$refs.update.cancelUpdatePerson()
+      this.$refs.delete.openDelete()
+      this.$refs.add.cancelAddUpdatePerson()
+      this.$refs.update.cancelAddUpdatePerson()
       this.model.id =  this.persons[index].id
       this.model.lastName =  this.persons[index].lastName
       this.model.firstName =  this.persons[index].firstName
@@ -113,7 +116,7 @@ export default {
 
     showUpdatePerson: function(index){
       this.$refs.delete.cancelDeletePerson()
-      this.$refs.update.openUpdate();
+      this.$refs.update.openAddUpdate();
       this.currentIndex = index
       this.update.id =  this.persons[index].id
       this.update.lastName =  this.persons[index].lastName
